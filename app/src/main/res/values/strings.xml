@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">MedicalDiary</string>
+    <string name="et_username">Username</string>
+    <string name="et_password">Password</string>
+    <string name="tv_sign_in">First time using? Register:</string>
+    <string name="button_register">Register</string>
+    <string name="button_sign_in">Sign in</string>
+    <string name="give_username">Choose a username:</string>
+    <string name="give_password">Choose a password:</string>
+    <string name="button_show">Show all users</string>
+    <string name="hello_text">Welcome!</string>
+    <string-array name="actionmenu">
+        <item>Medicin diary</item>
+        <item>Medication</item>
+        <item>Doctors appointments</item>
+        <item>Health diary</item>
+    </string-array>
+</resources>
