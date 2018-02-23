@@ -15,12 +15,15 @@ import android.util.Log;
 public class DBUserAdapter {
 
     static final String KEY_ROWID = "_id";
-    static final String KEY_USERNAME = "username";
-    static final String KEY_PASSWORD = "password";
-    static final String TAG = "DBUserAdapter";
-
+    static final String KEY_ROWID_MEDICIN = "_id";
     static final String DATABASE_NAME = "MedicalDiary";
     static final String DATABASE_TABLE = "users";
+    static final String DATABASE_TABLE_MEDICIN = "medicins";
+    static final String KEY_USERNAME = "username";
+    static final String KEY_PASSWORD = "password";
+    static final String KEY_MEDICIN = "medicin";
+    static final String KEY_DOSAGE = "dosage";
+    static final String TAG = "DBUserAdapter";
     static final int DATABASE_VERSION = 1;
 
     static final String DATABASE_CREATE =

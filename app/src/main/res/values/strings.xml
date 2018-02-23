@@ -9,6 +9,8 @@
     <string name="give_password">Choose a password:</string>
     <string name="button_show">Show all users</string>
     <string name="hello_text">Welcome!</string>
+    <string name="Add_new_medicin">Add a new medicin</string>
+    <string name="history">History</string>
     <string-array name="actionmenu">
         <item>Medicin diary</item>
         <item>Medication</item>
