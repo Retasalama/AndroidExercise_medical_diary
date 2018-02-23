@@ -14,21 +14,48 @@ import android.util.Log;
 
 public class DBUserAdapter {
 
-    static final String KEY_ROWID = "_id";
-    static final String KEY_ROWID_MEDICIN = "_id";
+
     static final String DATABASE_NAME = "MedicalDiary";
-    static final String DATABASE_TABLE = "users";
-    static final String DATABASE_TABLE_MEDICIN = "medicins";
+
+    //tables
+    static final String TABLE_USERS = "users";
+    static final String TABLE_MEDICINS = "medicins";
+    static final String TABLE_USERS_MEDICINS = "users_medicin";
+
+    //common colum names
+    static final String KEY_ID = "_id";
+
+    //Table user colum names
     static final String KEY_USERNAME = "username";
     static final String KEY_PASSWORD = "password";
+
+    //Table medicins colum names
     static final String KEY_MEDICIN = "medicin";
     static final String KEY_DOSAGE = "dosage";
-    static final String TAG = "DBUserAdapter";
-    static final int DATABASE_VERSION = 1;
 
-    static final String DATABASE_CREATE =
-            "create table users (_id integer primary key autoincrement, "
-            + "username text not null, password text not null);";
+    //Table users_medicins colum names
+    static final String KEY_USERS_ID = "users_id";
+    static final String KEY_MEDICINS_ID = "medicins_id";
+
+
+
+    static final int DATABASE_VERSION = 4;
+    static final String TAG = "DBUserAdapter";
+
+   /* private static final String CREATE_TABLE_USERS = "create table users (_id integer primary key autoincrement, "
+            + "username text not null, password text not null);";*/
+
+    private static final String CREATE_TABLE_USERS = "CREATE TABLE "
+            + TABLE_USERS + "(" + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_USERNAME
+            + " TEXT NOT NULL," + KEY_PASSWORD + " TEXT NOT NULL" + ")";
+
+    private static final String CREATE_TABLE_MEDICINS = "CREATE TABLE "
+            + TABLE_MEDICINS + "(" + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_MEDICIN
+            + " TEXT NOT NULL," + KEY_DOSAGE + " TEXT NOT NULL" + ")";
+
+    private static final String CREATE_TABLE_USERS_MEDICINS = "CREATE TABLE "
+            + TABLE_USERS_MEDICINS + "(" + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_USERS_ID
+            + " INTEGER," + KEY_MEDICINS_ID + " INTEGER " + ")";
 
     final Context context;
     DatabaseHelper DBHelper;
@@ -48,7 +75,9 @@ public class DBUserAdapter {
         @Override
         public void onCreate(SQLiteDatabase db){
             try{
-                db.execSQL(DATABASE_CREATE);
+                db.execSQL(CREATE_TABLE_USERS);
+                db.execSQL(CREATE_TABLE_MEDICINS);
+                db.execSQL(CREATE_TABLE_USERS_MEDICINS);
             } catch (SQLException e){
                 e.printStackTrace();
             }
@@ -58,7 +87,9 @@ public class DBUserAdapter {
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion){
             Log.w(TAG, "Upgrading database from version " + oldVersion + " to "
             + newVersion + ", which will destroy all old data");
-            db.execSQL("DROP TABLE IF EXISTS users");
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_MEDICINS);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS_MEDICINS);
             onCreate(db);
         }
     }
@@ -82,7 +113,7 @@ public class DBUserAdapter {
     public void insertUser(String username, String password){
 
         db.execSQL("INSERT INTO "
-            + DATABASE_TABLE
+            + TABLE_USERS
             + " ("+KEY_USERNAME+" , "+KEY_PASSWORD+")"
             + "VALUES ('"+username+"' , '"+password+"');");
     }
@@ -91,14 +122,14 @@ public class DBUserAdapter {
 
     public Cursor getAllUsers(){
 
-        return db.rawQuery("SELECT * FROM " + DATABASE_TABLE , null);
+        return db.rawQuery("SELECT * FROM " + TABLE_USERS , null);
 
     }
 
     public String checkUserAndPassword(String username){
 
         db = DBHelper.getReadableDatabase();
-        Cursor cursor = db.query(DATABASE_TABLE, null, KEY_USERNAME + "=?", new String[]{username},
+        Cursor cursor = db.query(TABLE_USERS, null, KEY_USERNAME + "=?", new String[]{username},
                 null, null, null);
 
         if(cursor.getCount() < 1){ //User doesn´ exist
