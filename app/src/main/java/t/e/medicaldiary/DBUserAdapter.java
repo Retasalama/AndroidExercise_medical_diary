@@ -42,6 +42,7 @@ public class DBUserAdapter {
     static final int DATABASE_VERSION = 4;
     static final String TAG = "DBUserAdapter";
 
+
    /* private static final String CREATE_TABLE_USERS = "create table users (_id integer primary key autoincrement, "
             + "username text not null, password text not null);";*/
 
@@ -67,6 +68,7 @@ public class DBUserAdapter {
     }
 
     private static class DatabaseHelper extends SQLiteOpenHelper{
+
 
         DatabaseHelper(Context context){
             super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -116,6 +118,21 @@ public class DBUserAdapter {
             + TABLE_USERS
             + " ("+KEY_USERNAME+" , "+KEY_PASSWORD+")"
             + "VALUES ('"+username+"' , '"+password+"');");
+
+        /*Cursor cursor = db.query(true, TABLE_USERS, new String[]{KEY_ID}, KEY_USERNAME + "=" + username,
+                null, null, null, null, null);*/
+        //Cursor cursor = db.rawQuery("SELECT (" + KEY_ID + ") FROM " + TABLE_USERS + "WHERE (" + KEY_USERNAME + "='" + username + ");", null);
+        Cursor cursor = db.rawQuery("SELECT _id FROM users WHERE username=?", new String[]{username});
+        if(cursor != null){
+            cursor.moveToFirst();
+            String id_fetched = cursor.getString(0);
+            User user = new User();
+            user.setId(id_fetched);
+            user.setUsername(username);
+            user.setPassword(password);
+        }
+
+
     }
 
     //-----returs all users----

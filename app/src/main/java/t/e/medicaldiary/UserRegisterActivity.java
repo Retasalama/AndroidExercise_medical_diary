@@ -34,8 +34,11 @@ public class UserRegisterActivity extends AppCompatActivity {
         db.open();
         db.insertUser(etUsername.getText().toString(), etPassword.getText().toString());
         db.close();
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+        User user = new User();
+        String str = user.getId();
+        Toast.makeText(this, "user id = " + str, Toast.LENGTH_LONG).show();
+        //Intent intent = new Intent(this, MainActivity.class);
+        //startActivity(intent);
     }
 
     protected void showAll(View view){

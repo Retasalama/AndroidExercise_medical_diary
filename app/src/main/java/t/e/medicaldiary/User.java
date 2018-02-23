@@ -1,12 +1,15 @@
+package t.e.medicaldiary;
+
+
 /**
  * Created by tanja on 23/02/2018.
  */
 
 public class User {
 
-    int id;
-    String username;
-    String password;
+    private static String id;
+    private static String username;
+    private static String password;
 
     //constructor
     public User(){}
@@ -16,13 +19,13 @@ public class User {
         this.password = password;
     }
 
-    public User(int id, String username, String password){
+    public User(String id, String username, String password){
         this.id = id;
         this.username = username;
         this.password = password;
     }
 
-    public void setId(int id){
+    public void setId(String id){
         this.id = id;
     }
 
@@ -34,7 +37,7 @@ public class User {
         this.password = password;
     }
 
-    public int getId(){
+    public String getId(){
         return this.id;
     }
 

@@ -4,26 +4,26 @@
 
 public class Medicin {
 
-    int id;
-    String medicin_name;
-    String dosage;
+    private String id;
+    private String medicin_name;
+    private String dosage;
 
     //constructors
 
     public Medicin(){}
 
-    public Medicin(int id, String medicin_name){
+    public Medicin(String id, String medicin_name){
         this.id = id;
         this.medicin_name = medicin_name;
     }
 
-    public Medicin(int id, String medicin_name, String dosage){
+    public Medicin(String id, String medicin_name, String dosage){
         this.id = id;
         this.medicin_name = medicin_name;
         this.dosage = dosage;
     }
 
-    public void setId(int id){
+    public void setId(String id){
         this.id = id;
     }
 
@@ -35,7 +35,7 @@ public class Medicin {
         this.dosage = dosage;
     }
 
-    public int getId(){
+    public String  getId(){
         return this.id;
     }
 
