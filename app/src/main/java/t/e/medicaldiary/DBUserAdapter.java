@@ -233,4 +233,11 @@ public class DBUserAdapter {
             return "notfound";
         }
     }
+
+    public Cursor getAllTakenMedicins(String userId){
+        db = DBHelper.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_MEDICIN_TAKEN, null, KEY_USERS_ID + "=?", new String[]{userId},
+                null, null, null);
+        return cursor;
+    }
 }

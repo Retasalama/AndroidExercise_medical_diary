@@ -2,6 +2,7 @@ package t.e.medicaldiary;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -77,38 +78,37 @@ public class MedicinDiaryActivity extends AppCompatActivity implements AdapterVi
                 final EditText inputMedicinDosage = (EditText) dialogView.findViewById(R.id.etMedicinDosage);
 
                 // set dialog message
-                alertDialogBuilder
-                        .setCancelable(false)
-                        .setPositiveButton("Add",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog,
-                                                        int id) {
-                                        // get user input and set it to etOutput
-                                        // edit text
-                                        String medicinName = inputMedicinName.getText().toString();
-                                        String medicinDosage = inputMedicinDosage.getText().toString();
-                                        db.open();
-                                        db.insertMedicin(medicinName, medicinDosage);
-                                        db.close();
-                                        loadSpinnerData();
+                alertDialogBuilder.setCancelable(false)
+                        .setPositiveButton("Add", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                // get user input and set it to etOutput
+                                // edit text
+                                String medicinName = inputMedicinName.getText().toString();
+                                String medicinDosage = inputMedicinDosage.getText().toString();
+                                db.open();
+                                db.insertMedicin(medicinName, medicinDosage);
+                                db.close();
+                                loadSpinnerData();
+                        }
+                    })
 
-                                    }
-                                })
-                        .setNegativeButton("Cancel",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog,
-                                                        int id) {
-                                        dialog.cancel();
-                                    }
-                                });
+                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                                }
+                    });
                 // create alert dialog
                 AlertDialog alertDialog = alertDialogBuilder.create();
                 // show it
                 alertDialog.show();
+                return true;
 
 
             case (R.id.history):
-                Toast.makeText(this, "History selected", Toast.LENGTH_LONG).show(); return true;
+                //Toast.makeText(this, "History selected", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(this, MedicinHistoryActivity.class);
+                startActivity(intent);
+                return true;
         }
         return false; }
 
