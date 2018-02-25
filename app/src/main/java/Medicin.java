@@ -4,9 +4,9 @@
 
 public class Medicin {
 
-    private String id;
-    private String medicin_name;
-    private String dosage;
+    private static String id;
+    private static String medicin_name;
+    private static String dosage;
 
     //constructors
 

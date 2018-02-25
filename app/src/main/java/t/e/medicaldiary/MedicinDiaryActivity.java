@@ -13,6 +13,12 @@ public class MedicinDiaryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_medicin_diary);
+        User user = new User();
+        String str = user.getId();
+        String str1 = user.getUsername();
+        String str2 = user.getPassword();
+        Toast.makeText(this, "user id = " + str + "\n"
+                + "username = " + str1 + "\n" + "password =" + str2, Toast.LENGTH_LONG).show();
     }
 
     @Override

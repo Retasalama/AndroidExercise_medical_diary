@@ -11,6 +11,10 @@
     <string name="hello_text">Welcome!</string>
     <string name="Add_new_medicin">Add a new medicin</string>
     <string name="history">History</string>
+    <string name="medicin_name">Medicin name</string>
+    <string name="medicin_dosage">Dosage</string>
+    <string name="button_add_medicin">Add</string>
+    <string name="button_cancel">Cancel</string>
     <string-array name="actionmenu">
         <item>Medicin diary</item>
         <item>Medication</item>

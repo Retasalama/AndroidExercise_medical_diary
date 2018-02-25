@@ -119,9 +119,7 @@ public class DBUserAdapter {
             + " ("+KEY_USERNAME+" , "+KEY_PASSWORD+")"
             + "VALUES ('"+username+"' , '"+password+"');");
 
-        /*Cursor cursor = db.query(true, TABLE_USERS, new String[]{KEY_ID}, KEY_USERNAME + "=" + username,
-                null, null, null, null, null);*/
-        //Cursor cursor = db.rawQuery("SELECT (" + KEY_ID + ") FROM " + TABLE_USERS + "WHERE (" + KEY_USERNAME + "='" + username + ");", null);
+        //Fetch user id from database and set user info to User-class
         Cursor cursor = db.rawQuery("SELECT _id FROM users WHERE username=?", new String[]{username});
         if(cursor != null){
             cursor.moveToFirst();
@@ -153,8 +151,14 @@ public class DBUserAdapter {
             return "USER DOESN´T EXIST";
         }else {
             cursor.moveToFirst();
-            String password = cursor.getString(cursor.getColumnIndex(KEY_PASSWORD));
-            return password;
+            String id_fetched = cursor.getString(cursor.getColumnIndex(KEY_ID));
+            String username_fetched = cursor.getString(cursor.getColumnIndex(KEY_USERNAME));
+            String password_fetched = cursor.getString(cursor.getColumnIndex(KEY_PASSWORD));
+            User user = new User();
+            user.setId(id_fetched);
+            user.setUsername(username_fetched);
+            user.setPassword(password_fetched);
+            return password_fetched;
         }
 
 
