@@ -16,6 +16,7 @@ import android.widget.Toast;
 public class MedicinDiaryActivity extends AppCompatActivity {
 
     final Context context = this;
+    private DBUserAdapter db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +28,7 @@ public class MedicinDiaryActivity extends AppCompatActivity {
         String str2 = user.getPassword();
         Toast.makeText(this, "user id = " + str + "\n"
                 + "username = " + str1 + "\n" + "password =" + str2, Toast.LENGTH_LONG).show();
+        db = new DBUserAdapter(this);
     }
 
     @Override
@@ -67,6 +69,9 @@ public class MedicinDiaryActivity extends AppCompatActivity {
                                         // edit text
                                         String medicinName = inputMedicinName.getText().toString();
                                         String medicinDosage = inputMedicinDosage.getText().toString();
+                                        db.open();
+                                        db.insertMedicin(medicinName, medicinDosage);
+                                        db.close();
 
                                     }
                                 })

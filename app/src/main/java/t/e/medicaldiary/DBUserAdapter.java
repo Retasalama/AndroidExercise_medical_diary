@@ -39,7 +39,7 @@ public class DBUserAdapter {
 
 
 
-    static final int DATABASE_VERSION = 4;
+    static final int DATABASE_VERSION = 5;
     static final String TAG = "DBUserAdapter";
 
 
@@ -161,6 +161,39 @@ public class DBUserAdapter {
             return password_fetched;
         }
 
+
+    }
+
+    public void insertMedicin(String medicin_name, String medicin_dosage){
+        db.execSQL("INSERT INTO "
+                + TABLE_MEDICINS
+                + " ("+KEY_MEDICIN+" , "+KEY_DOSAGE+")"
+                + "VALUES ('"+ medicin_name +"' , '"+ medicin_dosage +"');");
+
+        //Fetch medicin id from database and set medicin info to Medicin-class
+        Cursor cursor = db.rawQuery("SELECT _id FROM medicins WHERE medicin=?", new String[]{medicin_name});
+        if(cursor != null){
+            cursor.moveToFirst();
+            String id_fetched = cursor.getString(0);
+            Medicin medicin = new Medicin();
+            medicin.setId(id_fetched);
+            medicin.setMedicin_name(medicin_name);
+            medicin.setDosage(medicin_dosage);
+            createUserMedicin();
+        }
+
+    }
+
+    public void createUserMedicin() {
+
+        User user = new User();
+        Medicin medicin = new Medicin();
+        String user_id = user.getId();
+        String medicin_id = medicin.getId();
+        db.execSQL("INSERT INTO "
+                + TABLE_USERS_MEDICINS
+                + " ("+KEY_USERS_ID+" , "+KEY_MEDICINS_ID+")"
+                + "VALUES ('"+ user_id +"' , '"+ medicin_id +"');");
 
     }
 }
