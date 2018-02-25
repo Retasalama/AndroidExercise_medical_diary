@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -25,12 +26,14 @@ public class MedicinDiaryActivity extends AppCompatActivity implements AdapterVi
     private DBUserAdapter db;
     ArrayList<String> medicin_names;
     private Spinner spinner;
+    private DatePicker datePicker;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_medicin_diary);
+        datePicker=(DatePicker) findViewById(R.id.datePicker);
         User user = new User();
         String str = user.getId();
         String str1 = user.getUsername();
@@ -139,6 +142,10 @@ public class MedicinDiaryActivity extends AppCompatActivity implements AdapterVi
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
         db.close();
+    }
+
+    public void addMedTaken(){
+        
     }
 }
 
