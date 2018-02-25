@@ -150,9 +150,13 @@ public class MedicinDiaryActivity extends AppCompatActivity implements AdapterVi
 
     public void addMedTaken(View view){
 
-        Date date_picked= (Date) new Date (datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth());
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String dateString = sdf.format(date_picked);
+        // date from datepicker and medicin name from spinner
+        
+        String year = String.valueOf(datePicker.getYear());
+        String month = String.valueOf(datePicker.getMonth() + 1 );
+        String day = String.valueOf(datePicker.getDayOfMonth());
+
+        String date = year + "-" + month + "-" + day;
 
         String medicin = (String) spinner.getSelectedItem();
         db.open();
@@ -162,7 +166,7 @@ public class MedicinDiaryActivity extends AppCompatActivity implements AdapterVi
         String idUser = user.getId();
 
         db.open();
-        db.insertMedicinTaken(idUser, idMedicin, dateString);
+        db.insertMedicinTaken(idUser, idMedicin, date);
 
     }
 }
