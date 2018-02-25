@@ -18,7 +18,11 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class MedicinDiaryActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
@@ -144,8 +148,22 @@ public class MedicinDiaryActivity extends AppCompatActivity implements AdapterVi
         db.close();
     }
 
-    public void addMedTaken(){
-        
+    public void addMedTaken(View view){
+
+        Date date_picked= (Date) new Date (datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String dateString = sdf.format(date_picked);
+
+        String medicin = (String) spinner.getSelectedItem();
+        db.open();
+        String idMedicin = db.getMedId(medicin);
+
+        User user = new User();
+        String idUser = user.getId();
+
+        db.open();
+        db.insertMedicinTaken(idUser, idMedicin, dateString);
+
     }
 }
 

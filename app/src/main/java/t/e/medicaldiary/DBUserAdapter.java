@@ -21,6 +21,7 @@ public class DBUserAdapter {
     static final String TABLE_USERS = "users";
     static final String TABLE_MEDICINS = "medicins";
     static final String TABLE_USERS_MEDICINS = "users_medicin";
+    static final String TABLE_MEDICIN_TAKEN = "medicin_taken";
 
     //common colum names
     static final String KEY_ID = "_id";
@@ -37,9 +38,12 @@ public class DBUserAdapter {
     static final String KEY_USERS_ID = "users_id";
     static final String KEY_MEDICINS_ID = "medicins_id";
 
+    //Table medicin_taken column names
+    static final String KEY_DATE = "date";
 
 
-    static final int DATABASE_VERSION = 5;
+
+    static final int DATABASE_VERSION = 6;
     static final String TAG = "DBUserAdapter";
 
 
@@ -57,6 +61,10 @@ public class DBUserAdapter {
     private static final String CREATE_TABLE_USERS_MEDICINS = "CREATE TABLE "
             + TABLE_USERS_MEDICINS + "(" + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_USERS_ID
             + " INTEGER," + KEY_MEDICINS_ID + " INTEGER " + ")";
+
+    private static final String CREATE_TABLE_MEDICIN_TAKEN = "CREATE TABLE "
+            + TABLE_MEDICIN_TAKEN + "(" + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_USERS_ID
+            + " INTEGER," + KEY_MEDICINS_ID + " INTEGER, " + KEY_DATE + " DATE " + ")";
 
     final Context context;
     DatabaseHelper DBHelper;
@@ -80,6 +88,7 @@ public class DBUserAdapter {
                 db.execSQL(CREATE_TABLE_USERS);
                 db.execSQL(CREATE_TABLE_MEDICINS);
                 db.execSQL(CREATE_TABLE_USERS_MEDICINS);
+                db.execSQL(CREATE_TABLE_MEDICIN_TAKEN);
             } catch (SQLException e){
                 e.printStackTrace();
             }
@@ -175,6 +184,8 @@ public class DBUserAdapter {
         if(cursor != null){
             cursor.moveToFirst();
             String id_fetched = cursor.getString(0);
+            cursor.close();
+
             Medicin medicin = new Medicin();
             medicin.setId(id_fetched);
             medicin.setMedicin_name(medicin_name);
@@ -201,5 +212,25 @@ public class DBUserAdapter {
 
         return db.rawQuery("SELECT * FROM " + TABLE_MEDICINS , null);
 
+    }
+
+    public void insertMedicinTaken(String userId, String medicinID, String date){
+        db.execSQL("INSERT INTO "
+                + TABLE_MEDICIN_TAKEN
+                + " ("+KEY_USERS_ID+" , "+KEY_MEDICINS_ID+" , "+KEY_DATE+" )"
+                + "VALUES ('"+ userId +"' , '"+ medicinID +"' , '"+date+"');");
+    }
+
+    public String getMedId(String medicin_name){
+        Cursor cursor = db.rawQuery("SELECT _id FROM medicins WHERE medicin=?", new String[]{medicin_name});
+        if(cursor != null){
+            cursor.moveToFirst();
+            String id_fetched = cursor.getString(0);
+            cursor.close();
+            return id_fetched;
+        }
+        else {
+            return "notfound";
+        }
     }
 }
