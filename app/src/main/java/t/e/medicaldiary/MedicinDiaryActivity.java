@@ -1,13 +1,21 @@
 package t.e.medicaldiary;
 
+import android.content.Context;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 public class MedicinDiaryActivity extends AppCompatActivity {
+
+    final Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +42,47 @@ public class MedicinDiaryActivity extends AppCompatActivity {
         super.onOptionsItemSelected(item);
         switch (item.getItemId()) {
             case (R.id.add_new):
-                Toast.makeText(this, "Add new selected", Toast.LENGTH_LONG).show(); return true;
+                //Toast.makeText(this, "Add new selected", Toast.LENGTH_LONG).show(); return true;
+                LayoutInflater li = LayoutInflater.from(context);
+                View dialogView = li.inflate(R.layout.add_medicin_dialog, null);
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+
+                // set title
+                alertDialogBuilder.setTitle("Add new medicin");
+
+                // set custom_dialog.xml to alertdialog builder
+                alertDialogBuilder.setView(dialogView);
+
+                final EditText inputMedicinName = (EditText) dialogView.findViewById(R.id.etMedicinName);
+                final EditText inputMedicinDosage = (EditText) dialogView.findViewById(R.id.etMedicinDosage);
+
+                // set dialog message
+                alertDialogBuilder
+                        .setCancelable(false)
+                        .setPositiveButton("Add",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog,
+                                                        int id) {
+                                        // get user input and set it to etOutput
+                                        // edit text
+                                        String medicinName = inputMedicinName.getText().toString();
+                                        String medicinDosage = inputMedicinDosage.getText().toString();
+
+                                    }
+                                })
+                        .setNegativeButton("Cancel",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog,
+                                                        int id) {
+                                        dialog.cancel();
+                                    }
+                                });
+                // create alert dialog
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                // show it
+                alertDialog.show();
+
+
             case (R.id.history):
                 Toast.makeText(this, "History selected", Toast.LENGTH_LONG).show(); return true;
         }
