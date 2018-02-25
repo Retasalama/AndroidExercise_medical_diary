@@ -142,7 +142,7 @@ public class MedicinDiaryActivity extends AppCompatActivity implements AdapterVi
         spinner = (Spinner) findViewById(R.id.spinner_medicins);
 
         ArrayAdapter<String> adapter=new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, medicin_names);
+                R.layout.spinner, medicin_names);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
         db.close();
@@ -151,7 +151,7 @@ public class MedicinDiaryActivity extends AppCompatActivity implements AdapterVi
     public void addMedTaken(View view){
 
         // date from datepicker and medicin name from spinner
-        
+
         String year = String.valueOf(datePicker.getYear());
         String month = String.valueOf(datePicker.getMonth() + 1 );
         String day = String.valueOf(datePicker.getDayOfMonth());
