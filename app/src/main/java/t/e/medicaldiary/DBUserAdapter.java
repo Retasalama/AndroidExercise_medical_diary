@@ -196,4 +196,10 @@ public class DBUserAdapter {
                 + "VALUES ('"+ user_id +"' , '"+ medicin_id +"');");
 
     }
+
+    public Cursor getAllMedicins(){
+
+        return db.rawQuery("SELECT * FROM " + TABLE_MEDICINS , null);
+
+    }
 }

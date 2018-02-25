@@ -2,6 +2,7 @@ package t.e.medicaldiary;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.database.Cursor;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,13 +11,21 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
-public class MedicinDiaryActivity extends AppCompatActivity {
+import java.util.ArrayList;
+
+public class MedicinDiaryActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
     final Context context = this;
     private DBUserAdapter db;
+    ArrayList<String> medicin_names;
+    private Spinner spinner;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,8 +37,10 @@ public class MedicinDiaryActivity extends AppCompatActivity {
         String str2 = user.getPassword();
         Toast.makeText(this, "user id = " + str + "\n"
                 + "username = " + str1 + "\n" + "password =" + str2, Toast.LENGTH_LONG).show();
-        db = new DBUserAdapter(this);
+        loadSpinnerData();
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
@@ -72,6 +83,7 @@ public class MedicinDiaryActivity extends AppCompatActivity {
                                         db.open();
                                         db.insertMedicin(medicinName, medicinDosage);
                                         db.close();
+                                        loadSpinnerData();
 
                                     }
                                 })
@@ -92,5 +104,41 @@ public class MedicinDiaryActivity extends AppCompatActivity {
                 Toast.makeText(this, "History selected", Toast.LENGTH_LONG).show(); return true;
         }
         return false; }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
+
+    public void loadSpinnerData(){
+        db = new DBUserAdapter(this);
+
+        //populate spinner
+        db.open();
+        Cursor cursor = db.getAllMedicins();
+        medicin_names = new ArrayList<String>();
+
+        if (cursor.moveToFirst()) {
+            do {
+                medicin_names.add(cursor.getString(1));
+            } while (cursor.moveToNext());
+
+        }
+
+        cursor.close();
+
+        spinner = (Spinner) findViewById(R.id.spinner_medicins);
+
+        ArrayAdapter<String> adapter=new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, medicin_names);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(this);
+        db.close();
+    }
 }
 
