@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public class MedicinHistoryActivity extends AppCompatActivity {
     private DBUserAdapter db;
     private TextView textView;
+    private int counter = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,15 +30,20 @@ public class MedicinHistoryActivity extends AppCompatActivity {
 
         if (cursor.moveToFirst()) {
             do {
+                //medicin_names.add(cursor.getString(3));
+                medicin_names.add(cursor.getString(0));
                 medicin_names.add(cursor.getString(1));
-                medicin_names.add(cursor.getString(2));
-                medicin_names.add(cursor.getString(3));
             } while (cursor.moveToNext());
 
         }
         for (int i=0; i < medicin_names.size();i++){
-            textView.append(medicin_names.get(i));
-            textView.append("\n");
+            textView.append(medicin_names.get(i) + "\t" + "\t");
+            counter++;
+            if(counter == 2){
+                textView.append("\n");
+                counter = 0;
+            }
+
         }
 
         db.close();

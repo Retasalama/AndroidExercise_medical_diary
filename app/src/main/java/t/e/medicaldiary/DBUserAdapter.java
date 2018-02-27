@@ -43,7 +43,7 @@ public class DBUserAdapter {
 
 
 
-    static final int DATABASE_VERSION = 6;
+    static final int DATABASE_VERSION = 9;
     static final String TAG = "DBUserAdapter";
 
 
@@ -101,6 +101,7 @@ public class DBUserAdapter {
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_MEDICINS);
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS_MEDICINS);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_MEDICIN_TAKEN);
             onCreate(db);
         }
     }
@@ -236,8 +237,12 @@ public class DBUserAdapter {
 
     public Cursor getAllTakenMedicins(String userId){
         db = DBHelper.getReadableDatabase();
-        Cursor cursor = db.query(TABLE_MEDICIN_TAKEN, null, KEY_USERS_ID + "=?", new String[]{userId},
+        /*Cursor cursor = db.query(TABLE_MEDICIN_TAKEN, null, KEY_USERS_ID + "=?", new String[]{userId},
                 null, null, null);
+        return cursor;*/
+        Cursor cursor = db.rawQuery("SELECT date, medicin FROM "  + TABLE_MEDICINS +
+        " tm, " + TABLE_MEDICIN_TAKEN + " mt WHERE mt." + KEY_USERS_ID + " = '" + userId + "'" +
+        " AND tm." + KEY_ID + " = " + "mt." + KEY_MEDICINS_ID + " ORDER BY date DESC", null);
         return cursor;
     }
 }
