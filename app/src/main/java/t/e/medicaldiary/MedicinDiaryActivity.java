@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 public class MedicinDiaryActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
@@ -43,8 +44,8 @@ public class MedicinDiaryActivity extends AppCompatActivity implements AdapterVi
         String str = user.getId();
         String str1 = user.getUsername();
         String str2 = user.getPassword();
-        Toast.makeText(this, "user id = " + str + "\n"
-                + "username = " + str1 + "\n" + "password =" + str2, Toast.LENGTH_LONG).show();
+        /*Toast.makeText(this, "user id = " + str + "\n"
+                + "username = " + str1 + "\n" + "password =" + str2, Toast.LENGTH_LONG).show();*/
         loadSpinnerData();
     }
 
@@ -156,7 +157,17 @@ public class MedicinDiaryActivity extends AppCompatActivity implements AdapterVi
         String month = String.valueOf(datePicker.getMonth() + 1 );
         String day = String.valueOf(datePicker.getDayOfMonth());
 
+        if(datePicker.getMonth() < 9) {
+            month = "0" + month;
+
+        }
+
+        if(datePicker.getDayOfMonth() < 10){
+            day = "0" + day;
+        }
+
         String date = year + "-" + month + "-" + day;
+
 
         String medicin = (String) spinner.getSelectedItem();
         db.open();
@@ -167,6 +178,7 @@ public class MedicinDiaryActivity extends AppCompatActivity implements AdapterVi
 
         db.open();
         db.insertMedicinTaken(idUser, idMedicin, date);
+        Toast.makeText(this, "Date and medicin added", Toast.LENGTH_LONG).show();
 
     }
 }

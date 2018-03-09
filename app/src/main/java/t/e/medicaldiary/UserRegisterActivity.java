@@ -39,6 +39,8 @@ public class UserRegisterActivity extends AppCompatActivity {
         Toast.makeText(this, "user id = " + str, Toast.LENGTH_LONG).show();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+        etUsername.getText().clear();
+        etPassword.getText().clear();
     }
 
     protected void showAll(View view){

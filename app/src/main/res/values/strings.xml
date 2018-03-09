@@ -16,6 +16,7 @@
     <string name="button_add_medicin">Add</string>
     <string name="button_cancel">Cancel</string>
     <string name="button_add">Add</string>
+    <string name="add_date">Add taken medicin to diary:</string>
     <string-array name="actionmenu">
         <item>Medicin diary</item>
         <item>Medication</item>

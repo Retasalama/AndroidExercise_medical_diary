@@ -43,7 +43,7 @@ public class DBUserAdapter {
 
 
 
-    static final int DATABASE_VERSION = 9;
+    static final int DATABASE_VERSION = 10;
     static final String TAG = "DBUserAdapter";
 
 

@@ -43,6 +43,8 @@ public class SignInActivity extends AppCompatActivity {
             Toast.makeText(this, "Password incorrect!", Toast.LENGTH_LONG).show();
         }
         db.close();
+        etUsername.getText().clear();
+        etPassword.getText().clear();
 
 
     }
