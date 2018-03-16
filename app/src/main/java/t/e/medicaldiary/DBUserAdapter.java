@@ -43,12 +43,9 @@ public class DBUserAdapter {
 
 
 
-    static final int DATABASE_VERSION = 10;
+    static final int DATABASE_VERSION = 11;
     static final String TAG = "DBUserAdapter";
 
-
-   /* private static final String CREATE_TABLE_USERS = "create table users (_id integer primary key autoincrement, "
-            + "username text not null, password text not null);";*/
 
     private static final String CREATE_TABLE_USERS = "CREATE TABLE "
             + TABLE_USERS + "(" + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_USERNAME

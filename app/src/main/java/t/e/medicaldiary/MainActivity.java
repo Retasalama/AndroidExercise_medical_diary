@@ -27,8 +27,12 @@ public class MainActivity extends Activity {
         actions = getResources().getStringArray(R.array.actionmenu);
         list = (ListView)findViewById(R.id.lv_main);
 
+        //to make a custom list with pictures and text
+
         CustomList adapter = new CustomList(MainActivity.this, actions, imageId);
         list.setAdapter(adapter);
+
+        //actions when user clicks listview item
 
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
