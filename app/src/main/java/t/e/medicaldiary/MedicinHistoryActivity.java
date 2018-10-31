@@ -31,8 +31,17 @@ public class MedicinHistoryActivity extends AppCompatActivity {
         if (cursor.moveToFirst()) {
             do {
                 //medicin_names.add(cursor.getString(3));
-                medicin_names.add(cursor.getString(0));
-                medicin_names.add(cursor.getString(1));
+                //medicin_names.add(cursor.getString(0));
+                //medicin_names.add(cursor.getString(1));
+
+                //get date and medicin name from cursor and split the date in the form "dd.mm.yyyy"
+                String date = cursor.getString(0);
+                String medicin = cursor.getString(1);
+                String[] items1 = date.split("-");
+                String date2 = items1[2] + "." + items1[1] + "." + items1[0];
+                medicin_names.add(date2);
+                medicin_names.add(medicin);
+
             } while (cursor.moveToNext());
 
         }

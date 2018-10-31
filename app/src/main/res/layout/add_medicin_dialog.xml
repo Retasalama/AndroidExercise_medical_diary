@@ -22,4 +22,6 @@
         android:hint="@string/medicin_dosage"
         android:inputType="text" />
 
+
+
 </LinearLayout>

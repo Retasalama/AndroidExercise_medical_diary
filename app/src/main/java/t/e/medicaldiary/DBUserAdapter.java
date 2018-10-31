@@ -8,6 +8,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by tanja on 20/02/2018.
  */
@@ -33,6 +36,7 @@ public class DBUserAdapter {
     //Table medicins colum names
     static final String KEY_MEDICIN = "medicin";
     static final String KEY_DOSAGE = "dosage";
+    static final String KEY_IMAGE_PATH = "image_path";
 
     //Table users_medicins colum names
     static final String KEY_USERS_ID = "users_id";
@@ -43,7 +47,7 @@ public class DBUserAdapter {
 
 
 
-    static final int DATABASE_VERSION = 11;
+    static final int DATABASE_VERSION = 12;
     static final String TAG = "DBUserAdapter";
 
 
@@ -53,7 +57,7 @@ public class DBUserAdapter {
 
     private static final String CREATE_TABLE_MEDICINS = "CREATE TABLE "
             + TABLE_MEDICINS + "(" + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_MEDICIN
-            + " TEXT NOT NULL," + KEY_DOSAGE + " TEXT NOT NULL" + ")";
+            + " TEXT NOT NULL," + KEY_DOSAGE + " TEXT NOT NULL," + KEY_IMAGE_PATH + " TEXT" + ")";
 
     private static final String CREATE_TABLE_USERS_MEDICINS = "CREATE TABLE "
             + TABLE_USERS_MEDICINS + "(" + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_USERS_ID
@@ -171,6 +175,16 @@ public class DBUserAdapter {
 
     }
 
+    public void putMedicin(Medicin medicin){
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(KEY_MEDICIN, medicin.getMedicin_name());
+        contentValues.put(KEY_DOSAGE, medicin.getDosage());
+        contentValues.put(KEY_IMAGE_PATH, medicin.getImagePath());
+
+        db.insert(TABLE_MEDICINS, null, contentValues);
+
+    }
+
     public void insertMedicin(String medicin_name, String medicin_dosage){
         db.execSQL("INSERT INTO "
                 + TABLE_MEDICINS
@@ -241,5 +255,32 @@ public class DBUserAdapter {
         " tm, " + TABLE_MEDICIN_TAKEN + " mt WHERE mt." + KEY_USERS_ID + " = '" + userId + "'" +
         " AND tm." + KEY_ID + " = " + "mt." + KEY_MEDICINS_ID + " ORDER BY date DESC", null);
         return cursor;
+    }
+
+    // Getting All Children
+    public List<Medicin> getAllMedicins(String userId) {
+        List<Medicin> listOfMedicins = new ArrayList<Medicin>();
+        // Select All Query
+        String selectQuery = "SELECT medicin, date FROM "  + TABLE_MEDICINS +
+                " tm, " + TABLE_MEDICIN_TAKEN + " mt WHERE mt." + KEY_USERS_ID + " = '" + userId + "'" +
+                " AND tm." + KEY_ID + " = " + "mt." + KEY_MEDICINS_ID + " ORDER BY date DESC";
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                Medicin medicin = new Medicin();
+                //medicin.setId(cursor.getString(0));
+                medicin.setMedicin_name(cursor.getString(0));
+                medicin.setDate_given(cursor.getString(1));
+
+                // Adding child to list
+                listOfMedicins.add(medicin);
+            } while (cursor.moveToNext());
+        }
+
+        // return contact list
+        return listOfMedicins;
     }
 }

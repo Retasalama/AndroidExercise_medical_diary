@@ -30,7 +30,10 @@
         android:layout_weight="2"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="10dp"
+        android:calendarViewShown="false"
+        android:datePickerMode="spinner"
+        android:spinnersShown="true"/>
 
     <Button
         android:id="@+id/button_add_medication_taken"
